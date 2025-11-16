@@ -1,5 +1,5 @@
 # debug.py
-# Debug runner for Magazine Domain Project - Commit 2
+# Debug runner for Magazine Domain Project - Commit 3
 
 import sys
 import os
@@ -10,38 +10,35 @@ from magazine import Magazine
 from article import Article
 
 if __name__ == "__main__":
-    print("Magazine domain debug runner - Commit 2\n")
+    print("Magazine domain debug runner - Commit 3\n")
 
-    # Create sample Author
+    # Authors
     author1 = Author("John Doe")
     author2 = Author("Jane Smith")
-    print("Authors created:", author1.name, "and", author2.name)
 
-    # Create sample Magazine
+    # Magazines
     mag1 = Magazine("TechToday", "Technology")
     mag2 = Magazine("HealthNow", "Health")
-    print("Magazines created:", mag1.name, "-", mag1.category, "and", mag2.name, "-", mag2.category)
 
-    # Create sample Articles
+    # Articles
     article1 = Article(author1, mag1, "The Rise of AI")
     article2 = Article(author1, mag2, "Healthy Living Tips")
     article3 = Article(author2, mag1, "Tech Innovations 2025")
-    print("\nArticles created:")
-    print(article1)
-    print(article2)
-    print(article3)
 
-    # Check Article._all
-    print("\nAll articles in Article._all:", Article._all)
+    # ----------------------------------------
+    # Test Author relationship methods
+    # ----------------------------------------
+    print("Author1 articles:", author1.articles())
+    print("Author1 magazines:", author1.magazines())
 
-    # Test mutability
-    print("\nChanging author of article2 to Jane Smith...")
-    article2.author = author2
-    print("article2 new author:", article2.author.name)
+    print("Author2 articles:", author2.articles())
+    print("Author2 magazines:", author2.magazines())
 
-    print("Changing magazine of article3 to HealthNow...")
-    article3.magazine = mag2
-    print("article3 new magazine:", article3.magazine.name)
+    # ----------------------------------------
+    # Test Magazine relationship methods
+    # ----------------------------------------
+    print("Mag1 articles:", mag1.articles())
+    print("Mag1 contributors:", [author.name for author in mag1.contributors()])
 
-    # Titles remain immutable
-    print("article1 title:", article1.title)
+    print("Mag2 articles:", mag2.articles())
+    print("Mag2 contributors:", [author.name for author in mag2.contributors()])
