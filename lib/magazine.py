@@ -1,21 +1,18 @@
 # magazine.py
-# Magazine class implementation with aggregate methods
+# Magazine class implementation with relationship and aggregate methods
 
 from typing import List
-from author import Author
-from article import Article
+from collections import Counter
 
 class Magazine:
     _all_magazines = []  # For top_publisher()
 
     def __init__(self, name: str, category: str):
-        # Validate name
+        # Validate name and category
         if not isinstance(name, str):
             raise Exception("Magazine name must be a string.")
         if not (2 <= len(name) <= 16):
             raise Exception("Magazine name must be 2–16 characters.")
-
-        # Validate category
         if not isinstance(category, str):
             raise Exception("Category must be a string.")
         if len(category.strip()) == 0:
@@ -23,9 +20,8 @@ class Magazine:
 
         self._name = name
         self._category = category
-        self._articles: List[Article] = []
+        self._articles: List['Article'] = []
 
-        # Register this magazine in the class-level list
         Magazine._all_magazines.append(self)
 
     @property
@@ -52,18 +48,20 @@ class Magazine:
             raise Exception("Category cannot be empty.")
         self._category = value
 
-    # ----------------------------------------
+    # ------------------------------
     # RELATIONSHIP METHODS
-    # ----------------------------------------
+    # ------------------------------
     def articles(self):
+        """Return all Article instances published in this magazine"""
         return self._articles
 
     def contributors(self):
+        """Return unique Author instances who have written for this magazine"""
         return list({article.author for article in self._articles})
 
-    # ----------------------------------------
+    # ------------------------------
     # AGGREGATE / BONUS METHODS
-    # ----------------------------------------
+    # ------------------------------
     def article_titles(self):
         """Return list of all article titles for this magazine"""
         if len(self._articles) == 0:
@@ -72,7 +70,6 @@ class Magazine:
 
     def contributing_authors(self):
         """Return list of authors with more than 2 articles in this magazine"""
-        from collections import Counter
         if len(self._articles) == 0:
             return None
         counter = Counter([article.author for article in self._articles])
